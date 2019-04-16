@@ -8,6 +8,7 @@
 #include <unordered_map>
 #include <queue>
 
+typedef unsigned char u_char;
 //using my own student number as namespace
 namespace chtble001 {
 	class Image {
@@ -22,16 +23,18 @@ namespace chtble001 {
 		*/
 		private:
 			int width, height;    //width and height of the 2D array representing the image
-			std::unique_ptr<unsigned char[]> data;	//pointer to a 2D array representing the image
+			std::unique_ptr<u_char[][]> data;	//pointer to a 2D array representing the image
 		public:
+			class iterator;
+			friend class iterator;
 
 			//Inner iterator class to use as the main means to access data in my overloaded methods
 			class iterator   
 			{     
 			private: 
-				unsigned char *ptr;
+				u_char[] *ptr;
 				// construct only via Image class (begin/end)
-				iterator(u_char *p); 
+				iterator(u_char[] *p); 
 			public:
 				//copy construct is public 
 				iterator( const iterator & rhs);
@@ -50,7 +53,7 @@ namespace chtble001 {
 
 			//Image class methods
 			//Constructor which takes in a pointer to an unsigned char matrix
-			Image(unsigned char[][]);	//Default constructor
+			Image(*u_char[][] image, int width, int height);	//Default constructor
 			~Image();	//Destructor
 
 			//Copy constructor
@@ -73,6 +76,10 @@ namespace chtble001 {
 			Image operator* (int f);
 			friend ostream &operator<< ( ostream &output, const Image & rhs);
 			friend istream &operator>> ( istream &input, const Image & lhs);
+
+			//Load and save methods
+			void load();
+			void save();
 	}
 
 }
