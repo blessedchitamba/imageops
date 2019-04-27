@@ -50,39 +50,34 @@ Image::Image(Image && rhs) {
 
 //----------Iterator methods--------------
 
-Image::iterator::iterator(u_char *p) : ptr(p) {}
 Image::iterator::iterator( const iterator & rhs) : ptr(rhs.ptr) {}
-iterator & operator=(const iterator & rhs) {
-	if (this != rhs) {
-		delete ptr;
-		ptr = rhs.ptr;
-	}
-}
 
 //Overloaded operators
 
 //prefix ++
-const Image::iterator& operator++ () {
-	 ++ptr;
+Image::iterator& chtble001::Image::iterator::operator++ () {
+	 ++this->ptr;
+	 return *this;
 }
 
 //prefix --
-void Image::iterator::iterator operator--() {
-	 --ptr;
+Image::iterator& chtble001::Image::iterator::operator--() {
+	 --this->ptr;
+	 return *this;
 }
 
 //returns the pointer to the currently pointed image sub array
-Image::iterator::iterator operator*() {
-	return ptr;
+unsigned char& Image::iterator::operator*() {
+	return *(this->ptr);
 }
 
-//------------begin and end methods--------------
-iterator Image::begin(void) {
-	return iterator(data.get());	//data is a pointer to the first item in the image array
-}
-
-iterator Image::end(void) {
-	//this should return a pointer to the end of the image array
-	u_char *end_ptr = data.get()+(width*height);
-	return iterator(end_ptr);
+//iterator begin and end methods to construct iterator object
+Image::iterator Image::begin(void){
+        return iterator(data.get());
+ }
+                                                                                                         
+Image::iterator Image::end(void){
+        //this should return a pointer to the end of the image array
+        u_char *end_ptr = data.get()+(width*height);
+        return iterator(end_ptr);
 }

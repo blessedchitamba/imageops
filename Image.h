@@ -36,22 +36,21 @@ namespace chtble001 {
 			private: 
 				u_char *ptr;
 				// construct only via Image class (begin/end)
-				iterator(u_char *p); 
+				iterator(u_char *p) : ptr(p) {} 
+				friend class Image;
 			public:
 				//copy construct is public 
 				iterator( const iterator & rhs);
 
 				//overloaded ++ and -- and *
-				iterator operator++ ();
-				iterator operator--();
-				iterator operator*();
-				iterator & operator=(const iterator & rhs);
+				iterator& operator++ ();
+				iterator& operator--();
+				unsigned char& operator*();
+				iterator & operator=(const iterator & rhs){}
+				
+				
 			};  
 			//-------------End of iterator--------------
-
-			//iterator begin and end methods
-			iterator begin(void);
-			iterator end(void);
 
 			//Image class methods
 			//Constructor which takes in a pointer to an unsigned char array
@@ -69,6 +68,10 @@ namespace chtble001 {
 
 			//Move assignment
 			Image& operator=(Image && rhs){}
+			
+			//iterator begin and end methods
+			iterator begin(void);
+			iterator end(void);
 
 			//----------Operator Overloading Methods-----------
 			Image operator+ (const Image & rhs);
