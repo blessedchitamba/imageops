@@ -7,6 +7,8 @@
 #include <string>
 #include <unordered_map>
 #include <queue>
+#include <memory>
+#include <iostream>
 
 typedef unsigned char u_char;
 //using my own student number as namespace
@@ -23,7 +25,7 @@ namespace chtble001 {
 		*/
 		private:
 			int width, height;    //width and height of the 2D array representing the image
-			std::unique_ptr<u_char[][]> data;	//pointer to a 2D array representing the image
+			std::unique_ptr<u_char[]> data;	//pointer to a 1D array representing the image. will be referenced as a 2D
 		public:
 			class iterator;
 			friend class iterator;
@@ -32,9 +34,9 @@ namespace chtble001 {
 			class iterator   
 			{     
 			private: 
-				u_char[] *ptr;
+				u_char *ptr;
 				// construct only via Image class (begin/end)
-				iterator(u_char[] *p); 
+				iterator(u_char *p); 
 			public:
 				//copy construct is public 
 				iterator( const iterator & rhs);
@@ -52,21 +54,21 @@ namespace chtble001 {
 			iterator end(void);
 
 			//Image class methods
-			//Constructor which takes in a pointer to an unsigned char matrix
-			Image(*u_char[][] image, int width, int height);	//Default constructor
+			//Constructor which takes in a pointer to an unsigned char array
+			Image(std::unique_ptr<u_char[]> image, int width, int height);	//Default constructor
 			~Image();	//Destructor
 
 			//Copy constructor
 			Image(const Image & rhs);
 
 			//Copy Assignment operator
-			Image & operator=(const Image & rhs);
+			Image& operator=(const Image & rhs){}
 
 			//Move constructor
 			Image(Image && rhs);
 
 			//Move assignment
-			Image & operator=(Image && rhs);
+			Image& operator=(Image && rhs){}
 
 			//----------Operator Overloading Methods-----------
 			Image operator+ (const Image & rhs);
@@ -74,13 +76,13 @@ namespace chtble001 {
 			Image operator! ();
 			Image operator/ (const Image & rhs);
 			Image operator* (int f);
-			friend ostream &operator<< ( ostream &output, const Image & rhs);
-			friend istream &operator>> ( istream &input, const Image & lhs);
+			friend std::ostream &operator<< ( std::ostream &output, const Image & rhs);
+			friend std::istream &operator>> ( std::istream &input, const Image & lhs);
 
 			//Load and save methods
 			void load();
 			void save();
-	}
+	};
 
 }
 

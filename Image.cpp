@@ -1,6 +1,6 @@
 //Image class to hold image data for assignment 4
 //Blessed Chitamba
-//April 2016
+//April 2019
 
 #include "Image.h"
 #include <fstream>  // Needed for file stream objects
@@ -19,13 +19,13 @@ using namespace std;
 using namespace chtble001;
 
 //Constructor
-Image::Image(*u_char[][] image, int width, int height) : width(width), height(height) {
-	shared_ptr<u_char[][]> image(image);
+Image::Image(unique_ptr<u_char[]> image, int width, int height) : width(width), height(height) {
+	data = move(image);
 }
 
 //Destructor
 Image::~Image() {
-	//do the deletion of the image 2D matrix
+	//do the deletion of the image array
 }
 
 //Copy constructor
@@ -34,9 +34,9 @@ Image::Image(const Image & rhs){
 }
 
 //Copy Assignment
-Image::Image & operator=(const Image & rhs){
+//Image& operator=(const Image & rhs){
 	//Implement using the iterator begin() and end()
-}
+//}
 
 //Move Constructor
 Image::Image(Image && rhs) {
@@ -44,17 +44,17 @@ Image::Image(Image && rhs) {
 }
 
 //Move Assignment
-Image::Image & operator=(Image && rhs) {
+//Image::Image& operator=(Image && rhs) {
 	//Implement using the iterator begin and end methods
-}
+//}
 
 //----------Iterator methods--------------
 
-Image::iterator::iterator(u_char[] *p) : ptr(p) {}
+Image::iterator::iterator(u_char *p) : ptr(p) {}
 Image::iterator::iterator( const iterator & rhs) : ptr(rhs.ptr) {}
-Image::iterator::iterator & operator=(const iterator & rhs) {
+iterator & operator=(const iterator & rhs) {
 	if (this != rhs) {
-		delete[] ptr;
+		delete ptr;
 		ptr = rhs.ptr;
 	}
 }
@@ -62,13 +62,13 @@ Image::iterator::iterator & operator=(const iterator & rhs) {
 //Overloaded operators
 
 //prefix ++
-Image::iterator::iterator operator++ () {
-	return ++ptr;
+const Image::iterator& operator++ () {
+	 ++ptr;
 }
 
 //prefix --
-Image::iterator::iterator operator--() {
-	return --ptr;
+void Image::iterator::iterator operator--() {
+	 --ptr;
 }
 
 //returns the pointer to the currently pointed image sub array
@@ -77,43 +77,12 @@ Image::iterator::iterator operator*() {
 }
 
 //------------begin and end methods--------------
-Image::begin(void) {
-	u_char[][] *pointer = image.get();
-	return iterator(pointer[0]);
+iterator Image::begin(void) {
+	return iterator(data.get());	//data is a pointer to the first item in the image array
 }
 
-Image::end(void) {
-	u_char[][] *pointer = image.get();
-	return iterator(pointer[height]);
+iterator Image::end(void) {
+	//this should return a pointer to the end of the image array
+	u_char *end_ptr = data.get()+(width*height);
+	return iterator(end_ptr);
 }
-
-class Image 
-{  
-	private:    
-		int width, height;    
-		std::unique_ptr<u_char[][]> data;  
-	public:  
-		class iterator   
-		{     
-		private: 
-			u_char *ptr;
-			// construct only via Image class (begin/end)
-			iterator(u_char *p) : ptr(p) {} 
-		public:
-			//copy construct is public 
-			iterator( const iterator & rhs) : ptr(rhs.ptr) {} 
-			// define overloaded ops: *, ++, --, = 
-			iterator & operator=(const iterator & rhs) {
-				if (this != rhs) {
-					delete[] ptr;
-					ptr = rhs.ptr;
-				}
-			}
-			// other methods for iterator
-		}; 
-
-   // define begin()/end() to get iterator to start and    
-   // "one-past" end.
-    iterator begin(void) { return iterator(data.get())} 
-    // etc 
-};
