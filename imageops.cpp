@@ -36,9 +36,12 @@ int main(int argc, char * argv[])
 		
 		//load data array
 		data1 = loadImage(imageFile);
+		cout << data1[20] << endl;
 		
 		//to test, write that same array to outputfile
 		saveOutput(data1, outputFile, Nrows, Ncols);
+		data2 = loadImage(outputFile);
+		cout << data2[20] << endl;
 		
 		//create the Image object
 		
@@ -112,6 +115,7 @@ unsigned char* loadImage(string inputFile) {
 		iss.str(line);
 		string x, y;
 		iss >> x >> y;
+		cout << x << endl;
 		Nrows = stoi(x);
 		Ncols = stoi(y);
 		cout << "Nrows is " << Nrows << "and Ncols is " << Ncols << endl;
@@ -131,11 +135,11 @@ unsigned char* loadImage(string inputFile) {
 bool saveOutput(const unsigned char *array, string outputFile, int width, int height) {
 	//write the contents of array into the output file as binary
 	
-	ofstream outfile(outputFile, ios::binary);
+	ofstream outfile(outputFile, ios::out | ios::binary);
 	
 	//write header first
 	outfile << "P5" << '\n' << "#output file" << '\n' <<
-		width << height << '\n' << 255 << endl;
+		width << " " << height << '\n' << 255 << endl;
 	
 	//now write the array
 	outfile.write((char*)array, width*height);
