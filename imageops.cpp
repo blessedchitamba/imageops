@@ -47,6 +47,9 @@ int main(int argc, char * argv[])
 		Image *image = new Image(data1, Nrows, Ncols);
 		cout << "Image object created" << endl;
 		
+		//test using testMeth()
+		image->testMeth();
+		
 	}
 	else if (option == "-t") {
 		//threshhold operation. 

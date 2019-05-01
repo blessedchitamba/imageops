@@ -20,7 +20,6 @@ using namespace chtble001;
 
 //Constructor
 Image::Image(unsigned char *image, int width, int height) : data(image), width(width), height(height) {
-	//data = make_unique<unsigned char[]>(image);
 	cout << "Unique pointer created in constructor" << endl;
 }
 
@@ -79,6 +78,14 @@ Image::iterator Image::begin(void){
                                                                                                          
 Image::iterator Image::end(void){
         //this should return a pointer to the end of the image array
-        u_char *end_ptr = data.get()+(width*height);
+        u_char *end_ptr = data.get()+(width*height)-1;
         return iterator(end_ptr);
+}
+
+//test method
+void Image::testMeth() {
+	//create a begin and end iterator and print out the values they point to
+	Image::iterator beg = this->begin(), end = this->end();
+	cout << "Value of beg is " << *beg << endl;
+	cout << "Value of end is " << *end << endl;
 }

@@ -69,6 +69,9 @@ namespace chtble001 {
 			//Move assignment
 			Image& operator=(Image && rhs){}
 			
+			//Image test method to test begin and end
+			void testMeth();
+			
 			//iterator begin and end methods
 			iterator begin(void);
 			iterator end(void);
