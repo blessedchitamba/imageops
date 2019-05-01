@@ -36,14 +36,16 @@ int main(int argc, char * argv[])
 		
 		//load data array
 		data1 = loadImage(imageFile);
-		cout << data1[20] << endl;
+		//cout << data1[20] << endl;
 		
 		//to test, write that same array to outputfile
 		saveOutput(data1, outputFile, Nrows, Ncols);
-		data2 = loadImage(outputFile);
-		cout << data2[20] << endl;
+		//data2 = loadImage(outputFile);
+		//cout << data2[20] << endl;
 		
-		//create the Image object
+		//create the Image object. creating pointer to object
+		Image *image = new Image(data1, Nrows, Ncols);
+		cout << "Image object created" << endl;
 		
 	}
 	else if (option == "-t") {
@@ -115,7 +117,7 @@ unsigned char* loadImage(string inputFile) {
 		iss.str(line);
 		string x, y;
 		iss >> x >> y;
-		cout << x << endl;
+		//cout << x << endl;
 		Nrows = stoi(x);
 		Ncols = stoi(y);
 		cout << "Nrows is " << Nrows << "and Ncols is " << Ncols << endl;

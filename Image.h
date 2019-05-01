@@ -54,7 +54,7 @@ namespace chtble001 {
 
 			//Image class methods
 			//Constructor which takes in a pointer to an unsigned char array
-			Image(std::unique_ptr<u_char[]> image, int width, int height);	//Default constructor
+			Image(unsigned char *image, int width, int height);	//Default constructor
 			~Image();	//Destructor
 
 			//Copy constructor

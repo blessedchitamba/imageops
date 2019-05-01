@@ -19,8 +19,9 @@ using namespace std;
 using namespace chtble001;
 
 //Constructor
-Image::Image(unique_ptr<u_char[]> image, int width, int height) : width(width), height(height) {
-	data = move(image);
+Image::Image(unsigned char *image, int width, int height) : data(image), width(width), height(height) {
+	//data = make_unique<unsigned char[]>(image);
+	cout << "Unique pointer created in constructor" << endl;
 }
 
 //Destructor
