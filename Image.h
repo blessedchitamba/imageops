@@ -47,14 +47,16 @@ namespace chtble001 {
 				iterator& operator--();
 				unsigned char& operator*();
 				iterator & operator=(const iterator & rhs){}
+				bool operator!=(const iterator& rhs) const;
 				
 				
 			};  
 			//-------------End of iterator--------------
 
-			//Image class methods
+			//------------Image class methods------------
 			//Constructor which takes in a pointer to an unsigned char array
-			Image(unsigned char *image, int width, int height);	//Default constructor
+			Image();	//Default constructor
+			Image(unsigned char *image, int width, int height);	//Argument constructor
 			~Image();	//Destructor
 
 			//Copy constructor
@@ -72,9 +74,12 @@ namespace chtble001 {
 			//Image test method to test begin and end
 			void testMeth();
 			
+			//getData method to return raw pointer to array
+			unsigned char* getData();
+			
 			//iterator begin and end methods
-			iterator begin(void);
-			iterator end(void);
+			iterator begin(void) const;
+			iterator end(void) const;
 
 			//----------Operator Overloading Methods-----------
 			Image operator+ (const Image & rhs);

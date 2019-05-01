@@ -13,9 +13,9 @@
 using namespace std;
 using namespace chtble001;
 
-unsigned char* loadImage(string inputFile);
+unsigned char* loadImage(string inputFile, int& Nrows, int& Ncols);
 bool saveOutput(const unsigned char *array, string outputFile, int width, int height);
-int Nrows, Ncols;
+int Nrows1, Ncols1, Nrows2, Ncols2;
 
 int main(int argc, char * argv[])
 {
@@ -35,20 +35,20 @@ int main(int argc, char * argv[])
 		string outputFile = argv[3];
 		
 		//load data array
-		data1 = loadImage(imageFile);
+		data1 = loadImage(imageFile, Nrows1, Ncols1);
 		//cout << data1[20] << endl;
 		
 		//to test, write that same array to outputfile
-		saveOutput(data1, outputFile, Nrows, Ncols);
+		saveOutput(data1, outputFile, Nrows1, Ncols1);
 		//data2 = loadImage(outputFile);
 		//cout << data2[20] << endl;
 		
 		//create the Image object. creating pointer to object
-		Image *image = new Image(data1, Nrows, Ncols);
+		Image *image = new Image(data1, Nrows1, Ncols1);
 		cout << "Image object created" << endl;
 		
 		//test using testMeth()
-		image->testMeth();
+		//image->testMeth();
 		
 	}
 	else if (option == "-t") {
@@ -59,7 +59,7 @@ int main(int argc, char * argv[])
 		string outputFile = argv[4];
 		
 		//load data array
-		data1 = loadImage(imageFile);
+		data1 = loadImage(imageFile, Nrows1, Ncols1);
 		
 		//create Image object
 		
@@ -71,14 +71,23 @@ int main(int argc, char * argv[])
 		string outputFile = argv[4];
 		
 		//load arrays
-		data1 = loadImage(image1);
-		data2 = loadImage(image2);
+		data1 = loadImage(image1, Nrows1, Ncols1);
+		data2 = loadImage(image2, Nrows2, Ncols2);
 		
-		//create Image object
+		cout << "Nrows1 is " << Nrows1 << endl;
+		
+		//create Image objects
+		Image i1(data1, Nrows1, Ncols1);
+		Image i2(data2, Nrows2, Ncols2);
 		
 		if (option == "-a") {
 			//call appropriate method
 			cout << "Option called is " << option << endl;
+			Image i3;
+			i3 = i1 + i2;
+			cout << "Addition complete!" << endl;
+			
+			saveOutput(i3.getData(), outputFile, Nrows1, Ncols1);
 		}
 		else if (option == "-s") {
 			//call appropriate method
@@ -95,7 +104,7 @@ int main(int argc, char * argv[])
 }
 
 //loadImage definition
-unsigned char* loadImage(string inputFile) {
+unsigned char* loadImage(string inputFile, int& Nrows, int& Ncols) {
 	//implement here
 	cout << "Beginning loadImage.." << endl;
 	unsigned char *imageData;

@@ -18,6 +18,9 @@
 using namespace std;
 using namespace chtble001;
 
+//Default constructor
+Image::Image(): width(0), height(0),data(nullptr){}
+
 //Constructor
 Image::Image(unsigned char *image, int width, int height) : data(image), width(width), height(height) {
 	cout << "Unique pointer created in constructor" << endl;
@@ -41,6 +44,11 @@ Image::Image(const Image & rhs){
 //Move Constructor
 Image::Image(Image && rhs) {
 	//Implement using the iterator begin and end
+}
+
+//getData
+unsigned char* Image::getData() {
+	return data.get();
 }
 
 //Move Assignment
@@ -71,12 +79,17 @@ unsigned char& Image::iterator::operator*() {
 	return *(this->ptr);
 }
 
+//!= operator
+bool Image::iterator::operator!=(const iterator &rhs) const {
+	return this->ptr != rhs.ptr;
+}
+
 //iterator begin and end methods to construct iterator object
-Image::iterator Image::begin(void){
+Image::iterator Image::begin(void) const {
         return iterator(data.get());
  }
                                                                                                          
-Image::iterator Image::end(void){
+Image::iterator Image::end(void) const {
         //this should return a pointer to the end of the image array
         u_char *end_ptr = data.get()+(width*height)-1;
         return iterator(end_ptr);
@@ -88,4 +101,39 @@ void Image::testMeth() {
 	Image::iterator beg = this->begin(), end = this->end();
 	cout << "Value of beg is " << *beg << endl;
 	cout << "Value of end is " << *end << endl;
+}
+
+
+
+//---------------------Iterator operator overload methods--------------------------
+
+//add operator
+Image Image::operator+(const Image &rhs) {
+	//first check if the two images are the same size
+	if( (this->width == rhs.width) && (this->height == rhs.height) ) {
+		//create the iterators
+		cout << "Dimensions equal..." << endl;
+		Image::iterator beg = this->begin(), end = this->end();
+		Image::iterator rbeg = rhs.begin(), rend = rhs.end();
+		
+		//a few variables
+		unsigned char *result_data = new unsigned char[rhs.width*rhs.height];
+		int count = 0;
+		cout << rhs.width*rhs.height << endl;
+		cout << this->width << endl;
+		
+		//do the add
+		while(beg != end) {
+			result_data[count] = *beg + *rbeg;
+			++beg;
+			++rbeg;
+			count++;
+		}
+		
+		cout << "count is " << count << endl;
+		cout << "result_data[count] is " << result_data[count] << endl;
+		//return pointer to new object
+		Image result(result_data, rhs.width, rhs.height);
+		return result;
+	}
 }
