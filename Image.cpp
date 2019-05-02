@@ -146,7 +146,7 @@ Image Image::operator+(const Image &rhs) {
 		//do the add
 		while(beg != end) {
 			val = *beg + *rbeg;
-			val = (val > (unsigned char)255) ? (unsigned char)255 : val;   //to ensure value is less than 255
+			val = ((int)val > 255) ? 255 : (int)val;   //to ensure value is less than 255
 			result_data[count] = val;
 			//cout << result_data[count];
 			++beg;
