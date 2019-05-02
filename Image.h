@@ -111,7 +111,7 @@ namespace chtble001 {
 			Image operator- (const Image & rhs);
 			Image& operator! ();
 			Image operator/ (const Image & rhs);
-			Image& operator* (int f);
+			Image& operator* (const int& f);
 			friend std::ostream &operator<< ( std::ostream &output, const Image & rhs);
 			friend std::istream &operator>> ( std::istream &input, const Image & lhs);
 

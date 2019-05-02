@@ -55,7 +55,7 @@ int main(int argc, char * argv[])
 		//threshhold operation. 
 		cout << "Threshhold option selected.." << endl;
 		string imageFile = argv[2];
-		string threshInt = argv[3];
+		int threshInt = stoi(argv[3]);
 		string outputFile = argv[4];
 		
 		//load data array

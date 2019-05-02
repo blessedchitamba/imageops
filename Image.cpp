@@ -230,7 +230,7 @@ Image& Image::operator!() {
 //threshold * operator
 Image& Image::operator*(const int& f) {
 	//iterators
-	Image::iterator beg = begin(), end = end();
+	Image::iterator beg = this->begin(), end = this->end();
 	while (beg != end) {
 		if (*beg > f) {
 			*beg = 255;
