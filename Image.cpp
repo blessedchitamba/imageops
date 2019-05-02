@@ -140,8 +140,8 @@ Image Image::operator+(const Image &rhs) {
 		result_data = new unsigned char[rhs.width*rhs.height];
 		int count = 0;
 		unsigned char val;
-		cout << rhs.width*rhs.height << endl;
-		cout << this->width << endl;
+		//cout << rhs.width*rhs.height << endl;
+		//cout << this->width << endl;
 		
 		//do the add
 		while(beg != end) {
@@ -160,12 +160,56 @@ Image Image::operator+(const Image &rhs) {
 			++rbeg;
 			count++;
 		}
-		cout << '\n';
+		/*cout << '\n';
 		cout << "count is " << count << endl;
-		cout << "result_data[378] is " << result_data[378] << endl;
+		cout << "result_data[378] is " << result_data[378] << endl;*/
 		//return pointer to new object
 		Image result(result_data, rhs.width, rhs.height);
-		cout << "result width is " << result.getWidth() << endl;
+		//cout << "result width is " << result.getWidth() << endl;
+		return result;
+	}
+}
+
+
+//subtract operator
+Image Image::operator-(const Image &rhs) {
+	//first check if the two images are the same size
+	if( (this->width == rhs.width) && (this->height == rhs.height) ) {
+		//create the iterators
+		cout << "Dimensions equal..." << endl;
+		Image::iterator beg = this->begin(), end = this->end();
+		Image::iterator rbeg = rhs.begin(), rend = rhs.end();
+		
+		//a few variables
+		result_data = new unsigned char[rhs.width*rhs.height];
+		int count = 0;
+		unsigned char val;
+		//cout << rhs.width*rhs.height << endl;
+		//cout << this->width << endl;
+		
+		//do the subtract
+		while(beg != end) {
+			if((int)*beg - (int)*rbeg > 255) {
+				val = 255;
+			}
+			else if((int)*beg - (int)*rbeg < 0) {
+				val = 0;
+			}
+			else {
+				val = *beg - *rbeg;
+			}
+			result_data[count] = val;
+			//cout << result_data[count];
+			++beg;
+			++rbeg;
+			count++;
+		}
+		/*cout << '\n';
+		cout << "count is " << count << endl;
+		cout << "result_data[378] is " << result_data[378] << endl;*/
+		//return pointer to new object
+		Image result(result_data, rhs.width, rhs.height);
+		//cout << "result width is " << result.getWidth() << endl;
 		return result;
 	}
 }

@@ -82,7 +82,7 @@ int main(int argc, char * argv[])
 		
 		if (option == "-a") {
 			//call appropriate method
-			cout << "Option called is " << option << endl;
+			cout << "Option called is addition" << endl;
 			Image i3;
 			i3 = i1 + i2;
 			cout << "Addition complete!" << endl;
@@ -95,7 +95,16 @@ int main(int argc, char * argv[])
 		}
 		else if (option == "-s") {
 			//call appropriate method
-			cout << "Option called is " << option << endl;
+			cout << "Option called is subtraction" << endl;
+			Image i3;
+			i3 = i1 + i2;
+			cout << "Subtraction complete!" << endl;
+			
+			cout << i3.getWidth() << endl;
+			
+			//check if i3.data is null
+			if(i3.getData() == nullptr) {cout << "i3.data is null :| " << endl; }
+			saveOutput(i3.getData(), outputFile, Nrows1, Ncols1);
 		}
 		else if (option == "-l") {
 			//call approptiate method
