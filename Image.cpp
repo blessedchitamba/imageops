@@ -220,7 +220,7 @@ Image& Image::operator!() {
 	//create an iterator
 	Image::iterator beg = this->begin(), end = this->end();
 	while (beg != end) {
-		*beg = 255 - *begi;
+		*beg = 255 - *beg;
 		++beg;
 	}
 	cout << "Image inverted!" << endl;
