@@ -244,3 +244,26 @@ Image& Image::operator*(const int& f) {
 	cout << "Threshold applied" << endl;
 	return *this;
 }
+
+//mask / operator
+Image& Image::operator/(Image& rhs) {
+	//check if the images are equal size
+	if( (this->width == rhs.width) && (this->height == rhs.height) ) {
+		//create the iterators
+		cout << "Dimensions equal..." << endl;
+		cout << "Mask operator called " << endl;
+		Image::iterator beg = this->begin(), end = this->end();
+		Image::iterator rbeg = rhs.begin(), rend = rhs.end();
+
+		//do the masking
+		while (beg != end) {
+			if (*beg == 255) {
+				*beg = *rbeg;
+				++beg;
+				++rbeg;
+			}
+		}
+		cout << "Mask applied" << endl;
+		return rhs;
+	}
+}

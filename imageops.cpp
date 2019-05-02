@@ -113,8 +113,16 @@ int main(int argc, char * argv[])
 			saveOutput(i3.getData(), outputFile, Nrows1, Ncols1);
 		}
 		else if (option == "-l") {
-			//call approptiate method
-			cout << "Option called is " << option << endl;
+			//call appropriate method
+			cout << "Option called is mask" << endl;
+			i1/i2;
+			cout << "Mask complete!" << endl;
+			
+			cout << i2.getWidth() << endl;
+			
+			//check if i3.data is null
+			if(i2.getData() == nullptr) {cout << "i3.data is null :| " << endl; }
+			saveOutput(i2.getData(), outputFile, Nrows1, Ncols1);
 		}
 		else {
 			cout << "Invalid option!!" << endl;
