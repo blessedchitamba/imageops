@@ -226,3 +226,21 @@ Image& Image::operator!() {
 	cout << "Image inverted!" << endl;
 	return *this;
 }
+
+//threshold * operator
+Image& Image::operator*(const int& f) {
+	//iterators
+	Image::iterator beg = begin(), end = end();
+	while (beg != end) {
+		if (*beg > f) {
+			*beg = 255;
+			++beg;
+		}
+		else {
+			*beg = 0;
+			++beg; 
+		}
+	}
+	cout << "Threshold applied" << endl;
+	return *this;
+}

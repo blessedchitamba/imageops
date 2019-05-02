@@ -60,10 +60,16 @@ int main(int argc, char * argv[])
 		
 		//load data array
 		data1 = loadImage(imageFile, Nrows1, Ncols1);
+		//create the Image object. creating pointer to object
+		Image i(data1, Nrows1, Ncols1);
+		cout << "Image object created" << endl;
+
+		//threshold
+		i*threshInt;
 		
-		//create Image object
+		//write iout to output
+		saveOutput(i.getData(), outputFile, Nrows1, Ncols1);
 		
-		//call the appropriate method
 	}
 	else {		//else the rest have two image arguments
 		string image1 = argv[2];
