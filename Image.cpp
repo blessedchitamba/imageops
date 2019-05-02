@@ -267,3 +267,21 @@ Image& Image::operator/(Image& rhs) {
 		return rhs;
 	}
 }
+
+//<< stream operator
+ostream& operator<<(ostream& out, Image& rhs) {
+	//write the header into out
+	out << "P5" << '\n' << "#output file" << '\n' <<
+		width << " " << height << '\n' << 255 << '\n';
+
+	//iterators to iterate through the data array
+	Image::iterator beg = rhs.begin();
+	Image::iterator end = rhs.end();
+
+	while (beg != end) {
+		out << *beg;
+		++beg;
+	}
+	cout << "array written to outstream" << endl;
+	return out;
+}
