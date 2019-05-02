@@ -177,6 +177,7 @@ Image Image::operator-(const Image &rhs) {
 	if( (this->width == rhs.width) && (this->height == rhs.height) ) {
 		//create the iterators
 		cout << "Dimensions equal..." << endl;
+		cout << "Subtract operator called " << endl;
 		Image::iterator beg = this->begin(), end = this->end();
 		Image::iterator rbeg = rhs.begin(), rend = rhs.end();
 		
