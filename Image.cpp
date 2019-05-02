@@ -257,8 +257,8 @@ Image& Image::operator/(Image& rhs) {
 
 		//do the masking
 		while (beg != end) {
-			if (*beg == 255) {
-				*beg = *rbeg;
+			if (*rbeg == 255) {
+				*rbeg = *beg;
 			}
 			++beg;
 			++rbeg;
