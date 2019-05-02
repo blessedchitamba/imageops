@@ -119,6 +119,20 @@ namespace chtble001 {
 			void load();
 			void save();
 	};
+	
+	
+	//filter class
+	class filter {
+	public:
+		int N;	//the dimension of the filter matrix
+		float **filter_matrix;
+		filter() {}	//constructors
+		filter(const std::string& inputFile);
+		~filter();	//destructpr
+		
+		//function to convert to fraction
+		float fraction_convert(std::string item);
+	};
 
 }
 
