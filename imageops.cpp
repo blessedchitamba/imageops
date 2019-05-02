@@ -173,13 +173,20 @@ unsigned char* loadImage(string inputFile, int& Nrows, int& Ncols) {
 }
 
 //saveOutput definition. takes in a ref to unsigned char array and string filename
-bool saveOutput(Image i, string outputFile) {
+bool saveOutput(const unsigned char *array, string outputFile, int width, int height) {
 	//write the contents of array into the output file as binary
+	
 	ofstream outfile(outputFile, ios::out | ios::binary);
-
-	//write to file using overloaded <<
-	outfile << i;
+	
+	//write header first
+	outfile << "P5" << '\n' << "#output file" << '\n' <<
+		width << " " << height << '\n' << 255 << endl;
+	
+	cout << array[1] << endl;
+	//now write the array
+	outfile.write((char*)array, width*height);
 	
 	outfile.close();
+	
 	cout << "File with output image created" << endl;
 }
