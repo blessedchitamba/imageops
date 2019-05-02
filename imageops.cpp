@@ -97,7 +97,7 @@ int main(int argc, char * argv[])
 			//call appropriate method
 			cout << "Option called is subtraction" << endl;
 			Image i3;
-			i3 = i1 + i2;
+			i3 = i1 - i2;
 			cout << "Subtraction complete!" << endl;
 			
 			cout << i3.getWidth() << endl;
