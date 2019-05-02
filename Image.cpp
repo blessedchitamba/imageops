@@ -259,9 +259,9 @@ Image& Image::operator/(Image& rhs) {
 		while (beg != end) {
 			if (*beg == 255) {
 				*beg = *rbeg;
-				++beg;
-				++rbeg;
 			}
+			++beg;
+			++rbeg;
 		}
 		cout << "Mask applied" << endl;
 		return rhs;
