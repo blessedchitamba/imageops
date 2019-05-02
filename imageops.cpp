@@ -37,15 +37,15 @@ int main(int argc, char * argv[])
 		//load data array
 		data1 = loadImage(imageFile, Nrows1, Ncols1);
 		//cout << data1[20] << endl;
-		
-		//to test, write that same array to outputfile
-		saveOutput(data1, outputFile, Nrows1, Ncols1);
-		//data2 = loadImage(outputFile);
-		//cout << data2[20] << endl;
-		
 		//create the Image object. creating pointer to object
-		Image *image = new Image(data1, Nrows1, Ncols1);
+		Image i(data1, Nrows1, Ncols1);
 		cout << "Image object created" << endl;
+
+		//invert
+		!i;
+		
+		//write iout to output
+		saveOutput(i.getData(), outputFile, Nrows1, Ncols1);
 		
 		//test using testMeth()
 		//image->testMeth();

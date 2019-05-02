@@ -109,7 +109,7 @@ namespace chtble001 {
 			//----------Operator Overloading Methods-----------
 			Image operator+ (const Image & rhs);
 			Image operator- (const Image & rhs);
-			Image operator! ();
+			Image& operator! ();
 			Image operator/ (const Image & rhs);
 			Image operator* (int f);
 			friend std::ostream &operator<< ( std::ostream &output, const Image & rhs);

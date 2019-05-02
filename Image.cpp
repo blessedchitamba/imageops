@@ -214,3 +214,15 @@ Image Image::operator-(const Image &rhs) {
 		return result;
 	}
 }
+
+//Invert ! operator
+Image& Image::operator!() {
+	//create an iterator
+	Image::iterator beg = this->begin(), end = this->end();
+	while (beg != end) {
+		*beg = 255 - *begi;
+		++beg;
+	}
+	cout << "Image inverted!" << endl;
+	return *this;
+}
