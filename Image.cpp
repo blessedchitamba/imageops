@@ -71,6 +71,46 @@ int Image::getWidth() {
 	return width;
 }
 
+//get index method
+int Image::get_index(int column, int row) const {
+
+	/*If both are less than zero*/
+	if (column < 0 && row < 0) {
+		row = -(row)-1;
+		column = -(column)-1;
+	}
+
+	/*column is now greater or equal to zero and row is less than zero*/
+	if (column >= 0 && row < 0) {
+		row = -(row)-1;
+	}
+
+	/*if column is less than 0 and row is greater or equal to zero*/
+	if (column < 0 && row >= 0) {
+		column = -(column)-1;
+	}
+	
+	/*If col is greater than the index and row is fine*/
+	if (column >= image_witdh && row < image_height) {
+		column = (2 * image_witdh) - column - 1;
+	}
+
+	/*If row is now greater than height*/
+	if (column < image_witdh && row >= image_height) {
+		//2*width-col-1
+		row = (2 * image_height) - row - 1;
+	}
+
+	/*if they are both out of bounds*/
+	if (column >= image_witdh && row >= image_height) {
+		row = (2 * image_height) - row - 1;
+		column = (2 * image_witdh) - column - 1;
+	}
+
+	int result = (row * image_witdh) + column;
+	return result;
+}
+
 //Move Assignment
 //Image::Image& operator=(Image && rhs) {
 	//Implement using the iterator begin and end methods
@@ -266,4 +306,35 @@ Image& Image::operator/(Image& rhs) {
 		cout << "Mask applied" << endl;
 		return rhs;
 	}
+}
+
+//filter operator for extra credit
+Image Image::operator%(filter& fil) {
+	
+	//create image to hold the result
+	Image final_im(witdh, height);
+
+	//some stuff
+	int num = (fil.N - 1) / 2;
+	int k = 0, m = 0;
+
+	//loop through in a nested way to apply filter
+	for (int y = 0; y < height; ++y) {
+		for (int x = 0; x < witdh; ++x) {
+			float temp = 0;
+			k = x - num, m = y - num;
+			for (int i = 0; i < fil.N; ++i) {
+				for (int j = 0; j < fil.N; ++j) {
+					temp += data.get()[get_index(k++, m)] * fil.filter_matrix[i][j];
+				}
+				// reinit column and add +1 to the row to go to the next level
+				k = x - num;
+				++m;
+			}
+			int index = final_im.get_index(x, y);
+			iterator resit = final_im.begin() + index;
+			*resit = (unsigned char)temp;
+		}
+	}
+	return final_im;
 }

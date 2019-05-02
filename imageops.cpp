@@ -71,6 +71,32 @@ int main(int argc, char * argv[])
 		saveOutput(i.getData(), outputFile, Nrows1, Ncols1);
 		
 	}
+	else if (option == "-f") {
+		//threshhold operation. 
+		cout << "Filter option selected.." << endl;
+		string imageFile = argv[2];
+		string filter_file = argv[3];
+		string outputFile = argv[4];
+		
+		//load data array
+		data1 = loadImage(imageFile, Nrows1, Ncols1);
+		//create the Image object. creating pointer to object
+		Image i(data1, Nrows1, Ncols1);
+
+		//result image
+		Image i_result;
+		cout << "Image object created" << endl;
+
+		//filter object
+		filter fil(filter_file);
+		
+		//do the filtering
+		i_result = i % fil;
+		
+		//write iout to output
+		saveOutput(i_result.getData(), outputFile, Nrows1, Ncols1);
+		
+	}
 	else {		//else the rest have two image arguments
 		string image1 = argv[2];
 		string image2 = argv[3];

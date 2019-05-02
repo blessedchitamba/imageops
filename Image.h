@@ -101,6 +101,7 @@ namespace chtble001 {
 			//getData method to return raw pointer to array
 			unsigned char* getData();
 			int getWidth();
+			int get_index(int row, int col)const;
 			
 			//iterator begin and end methods
 			iterator begin(void) const;
@@ -112,6 +113,7 @@ namespace chtble001 {
 			Image& operator! ();
 			Image& operator/ (Image & rhs);
 			Image& operator* (const int& f);
+			Image operator%(Filter& temp);
 			friend std::ostream &operator<< ( std::ostream &output, const Image & rhs);
 			friend std::istream &operator>> ( std::istream &input, const Image & lhs);
 
