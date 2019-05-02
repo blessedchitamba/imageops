@@ -26,6 +26,7 @@ namespace chtble001 {
 		private:
 			int width, height;    //width and height of the 2D array representing the image
 			std::unique_ptr<u_char[]> data;	//pointer to a 1D array representing the image. will be referenced as a 2D
+			u_char *result_data;	//the char array to hold the result of any operation between two images
 		public:
 			class iterator;
 			friend class iterator;
@@ -63,19 +64,43 @@ namespace chtble001 {
 			Image(const Image & rhs);
 
 			//Copy Assignment operator
-			Image& operator=(const Image & rhs){}
+			Image& operator=(const Image & rhs){
+				std::cout << "Copy assignment called " << std::endl;
+				this->width = rhs.width;
+				this->height = rhs.height;
+				this->data.reset(new unsigned char[this->width*this->height]);
+				
+				//copy the array
+				Image::iterator beg = this->begin(), end = this->end();
+				Image::iterator rbeg = rhs.begin(), rend = rhs.end();
+				while (beg != end) {
+					*beg = *rbeg;
+					++beg;
+					++rbeg;
+				}
+				
+				return *this;
+			}
 
 			//Move constructor
 			Image(Image && rhs);
 
 			//Move assignment
-			Image& operator=(Image && rhs){}
+			Image& operator=(Image && rhs){
+				std::cout << "Move assignment called " << std::endl;
+				this->width = std::move(rhs.width);
+				this->height = std::move(rhs.height);
+				this->data = std::move(rhs.data);
+				rhs.data.reset(nullptr);
+				return *this;
+			}
 			
 			//Image test method to test begin and end
 			void testMeth();
 			
 			//getData method to return raw pointer to array
 			unsigned char* getData();
+			int getWidth();
 			
 			//iterator begin and end methods
 			iterator begin(void) const;

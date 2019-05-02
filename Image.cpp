@@ -32,8 +32,22 @@ Image::~Image() {
 }
 
 //Copy constructor
-Image::Image(const Image & rhs){
+Image::Image(const Image & rhs) : width(rhs.width), height(rhs.height), data(new unsigned char[width*height]) {
 	//Implement using the iterator begin() and end()
+	cout << "Copy constructor called " << endl;
+	
+	//create the iterators
+	Image::iterator beg = this->begin(), end = this->end();
+	Image::iterator rbeg = rhs.begin(), rend = rhs.end();
+	
+	//copy array
+	while (beg != end) {
+		*beg = *rbeg;
+		++beg;
+		++rend;
+	}
+	
+	//return *this;
 }
 
 //Copy Assignment
@@ -42,13 +56,19 @@ Image::Image(const Image & rhs){
 //}
 
 //Move Constructor
-Image::Image(Image && rhs) {
+Image::Image(Image && rhs) : width(move(rhs.width)), height(move(rhs.height)), data(move(rhs.data)) {
 	//Implement using the iterator begin and end
+	cout << "Move constructor called " << endl;
+	rhs.data.reset(nullptr);
 }
 
 //getData
 unsigned char* Image::getData() {
 	return data.get();
+}
+
+int Image::getWidth() {
+	return width;
 }
 
 //Move Assignment
@@ -117,23 +137,28 @@ Image Image::operator+(const Image &rhs) {
 		Image::iterator rbeg = rhs.begin(), rend = rhs.end();
 		
 		//a few variables
-		unsigned char *result_data = new unsigned char[rhs.width*rhs.height];
+		result_data = new unsigned char[rhs.width*rhs.height];
 		int count = 0;
+		unsigned char val;
 		cout << rhs.width*rhs.height << endl;
 		cout << this->width << endl;
 		
 		//do the add
 		while(beg != end) {
-			result_data[count] = *beg + *rbeg;
+			val = *beg + *rbeg;
+			val = (val > 255) ? 255 : val;   //to ensure value is less than 255
+			result_data[count] = val;
+			//cout << result_data[count];
 			++beg;
 			++rbeg;
 			count++;
 		}
-		
+		cout << '\n';
 		cout << "count is " << count << endl;
-		cout << "result_data[count] is " << result_data[count] << endl;
+		cout << "result_data[378] is " << result_data[378] << endl;
 		//return pointer to new object
 		Image result(result_data, rhs.width, rhs.height);
+		cout << "result width is " << result.getWidth() << endl;
 		return result;
 	}
 }

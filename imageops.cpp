@@ -87,6 +87,10 @@ int main(int argc, char * argv[])
 			i3 = i1 + i2;
 			cout << "Addition complete!" << endl;
 			
+			cout << i3.getWidth() << endl;
+			
+			//check if i3.data is null
+			if(i3.getData() == nullptr) {cout << "i3.data is null :| " << endl; }
 			saveOutput(i3.getData(), outputFile, Nrows1, Ncols1);
 		}
 		else if (option == "-s") {
@@ -155,6 +159,7 @@ bool saveOutput(const unsigned char *array, string outputFile, int width, int he
 	outfile << "P5" << '\n' << "#output file" << '\n' <<
 		width << " " << height << '\n' << 255 << endl;
 	
+	cout << array[1] << endl;
 	//now write the array
 	outfile.write((char*)array, width*height);
 	
