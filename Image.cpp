@@ -91,23 +91,23 @@ int Image::get_index(int column, int row) const {
 	}
 	
 	/*If col is greater than the index and row is fine*/
-	if (column >= image_witdh && row < image_height) {
-		column = (2 * image_witdh) - column - 1;
+	if (column >= width && row < height) {
+		column = (2 * width) - column - 1;
 	}
 
 	/*If row is now greater than height*/
-	if (column < image_witdh && row >= image_height) {
+	if (column < width && row >= height) {
 		//2*width-col-1
-		row = (2 * image_height) - row - 1;
+		row = (2 * height) - row - 1;
 	}
 
 	/*if they are both out of bounds*/
-	if (column >= image_witdh && row >= image_height) {
-		row = (2 * image_height) - row - 1;
-		column = (2 * image_witdh) - column - 1;
+	if (column >= width && row >= height) {
+		row = (2 * height) - row - 1;
+		column = (2 * width) - column - 1;
 	}
 
-	int result = (row * image_witdh) + column;
+	int result = (row * width) + column;
 	return result;
 }
 
@@ -132,6 +132,12 @@ Image::iterator& chtble001::Image::iterator::operator++ () {
 Image::iterator& chtble001::Image::iterator::operator--() {
 	 --this->ptr;
 	 return *this;
+}
+
+//overloadd + operator that adds and int and an iterator
+Image::iterator& chtble001::Image::iterator::operator+(const int& rhs) {
+	this->ptr += rhs;
+	return *this;
 }
 
 //returns the pointer to the currently pointed image sub array
@@ -311,8 +317,10 @@ Image& Image::operator/(Image& rhs) {
 //filter operator for extra credit
 Image Image::operator%(filter& fil) {
 	
+	//empty data array
+	unsigned char *array = new unsigned char[width*height];
 	//create image to hold the result
-	Image final_im(witdh, height);
+	Image final_im(array, width, height);
 
 	//some stuff
 	int num = (fil.N - 1) / 2;
@@ -320,7 +328,7 @@ Image Image::operator%(filter& fil) {
 
 	//loop through in a nested way to apply filter
 	for (int y = 0; y < height; ++y) {
-		for (int x = 0; x < witdh; ++x) {
+		for (int x = 0; x < width; ++x) {
 			float temp = 0;
 			k = x - num, m = y - num;
 			for (int i = 0; i < fil.N; ++i) {

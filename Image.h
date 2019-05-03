@@ -13,6 +13,7 @@
 typedef unsigned char u_char;
 //using my own student number as namespace
 namespace chtble001 {
+	class filter;
 	class Image {
 		/*
 		  Methods in this class should be:
@@ -49,8 +50,7 @@ namespace chtble001 {
 				unsigned char& operator*();
 				iterator & operator=(const iterator & rhs){}
 				bool operator!=(const iterator& rhs) const;
-				
-				
+				iterator& operator+(const int& rhs);
 			};  
 			//-------------End of iterator--------------
 
@@ -113,7 +113,7 @@ namespace chtble001 {
 			Image& operator! ();
 			Image& operator/ (Image & rhs);
 			Image& operator* (const int& f);
-			Image operator%(Filter& temp);
+			Image operator%(filter& fil);
 			friend std::ostream &operator<< ( std::ostream &output, const Image & rhs);
 			friend std::istream &operator>> ( std::istream &input, const Image & lhs);
 
